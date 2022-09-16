@@ -63,8 +63,8 @@ class ShopList(models.Model):
         on_delete=models.CASCADE,
     )
     title = models.CharField(max_length=64)
-    # location = models.ManyToManyField('Store')
-    # items = models.ManyToManyField('Item')
+    items = models.ManyToManyField('Item')
+    # total = ???
 
     def __str__(self):
         return self.title
@@ -72,10 +72,39 @@ class ShopList(models.Model):
 
 class Item(models.Model):
     """Item object."""
+    name = models.CharField(max_length=64)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+    price = models.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+    )
+    # category = models.ManyToManyField('Category')
+    # store = models.ManyToManyField('Store')
+
+    def __str__(self):
+        return self.name
 
 
-class Store(models.Model):
-    """Store object"""
+# class Category(models.Model):
+#     """Item category object."""
+#     user = models.ForeignKey(
+#         settings.AUTH_USER_MODEL,
+#         on_delete=models.CASCADE,
+#     )
+#     name = models.CharField(max_length=64)
+
+
+# class Store(models.Model):
+#     """Store object."""
+#     user = models.ForeignKey(
+#         settings.AUTH_USER_MODEL,
+#         on_delete=models.CASCADE,
+#     )
+#     name = models.CharField(max_length=64)
+
 
 
 class Recipe(models.Model):

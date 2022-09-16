@@ -82,20 +82,6 @@ class PrivateRecipeAPITests(TestCase):
         )
         self.client.force_authenticate(self.user)
 
-    def test_retrieve_receipes(self):
-        """Test retrieving list of recipes."""
-        create_recipe(user=self.user)
-        create_recipe(user=self.user)
-
-        res = self.client.get(RECIPE_URL)
-
-        recipes = Recipe.objects.all().order_by('-id')
-        serializer = RecipeSerializer(recipes, many=True)
-        print(serializer.data)
-        print(res.data)
-        self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(res.data, serializer.data)
-
     def test_recipe_list_limited_to_user(self):
         """Test list of recipes is limited to authenticated user"""
         other_user = create_user(
@@ -122,21 +108,6 @@ class PrivateRecipeAPITests(TestCase):
         serializer = RecipeDetailSerializer(recipe)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, serializer.data)
-
-    def test_create_recipe(self):
-        """Test recipe creation."""
-        payload = {
-            'title': 'Recipe title',
-            'time_minutes': 25,
-            'price': Decimal('5.50'),
-        }
-
-        res = self.client.post(RECIPE_URL, payload)
-        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
-        recipe = Recipe.objects.get(id=res.data['id'])
-        for k, v in payload.items():
-            self.assertEqual(getattr(recipe, k), v)
-        self.assertEqual(recipe.user, self.user)
 
     def test_partial_update(self):
         """Test partial update of a recipe."""

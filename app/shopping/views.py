@@ -28,3 +28,7 @@ class ShopListViewSet(viewsets.ModelViewSet):
         """Retrieve list of ingredients."""
         user = self.request.user
         return self.queryset.filter(user=user).order_by('-id')
+
+    def perform_create(self, serializer):
+        """Create a new shopping list."""
+        serializer.save(user=self.request.user)
