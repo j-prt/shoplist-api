@@ -56,7 +56,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
 
 
-class ShoppingList(models.Model):
+class ShopList(models.Model):
     """Shopping list object."""
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,

@@ -36,6 +36,7 @@ urlpatterns = [
     ),
     path('api/user/', include('user.urls')),
     path('api/recipe/', include('recipe.urls')),
+    path('api/shopping/', include('shopping.urls')),
 ]
 
 if settings.DEBUG:
