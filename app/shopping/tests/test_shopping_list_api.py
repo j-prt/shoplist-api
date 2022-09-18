@@ -9,7 +9,8 @@ from rest_framework import status
 from rest_framework.test import APIClient
 
 from core.models import (
-    ShopList
+    ShopList,
+    Item,
 )
 
 from shopping.serializers import ShopListSerializer
@@ -105,3 +106,16 @@ class PrivateAPITests(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_404_NOT_FOUND)
         self.assertTrue(ShopList.objects.filter(id=sl.id).exists)
+
+    def test_total_field(self):
+        """Test total field represents accurate total."""
+        sl = create_list(user=self.user)
+        item1 = Item.objects.create(user=self.user, name='grapes', price=5.50)
+        item2 = Item.objects.create(user=self.user, name='apples', price=4.75)
+        sl.items.add(item1, item2)
+
+        url = detail_url(sl.id)
+        res = self.client.get(url)
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data['total'], item1.price + item2.price)

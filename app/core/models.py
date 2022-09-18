@@ -64,7 +64,10 @@ class ShopList(models.Model):
     )
     title = models.CharField(max_length=64)
     items = models.ManyToManyField('Item', blank=True)
-    # total = ???
+
+    @property
+    def total(self):
+        return sum([item.price for item in self.items.all()])
 
     def __str__(self):
         return self.title
@@ -96,6 +99,9 @@ class Category(models.Model):
     )
     name = models.CharField(max_length=64)
 
+    def __str__(self):
+        return self.name
+
 
 class Store(models.Model):
     """Store object."""
@@ -104,6 +110,9 @@ class Store(models.Model):
         on_delete=models.CASCADE,
     )
     name = models.CharField(max_length=64)
+
+    def __str__(self):
+        return self.name
 
 
 

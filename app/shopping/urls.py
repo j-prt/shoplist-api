@@ -12,7 +12,7 @@ from shopping import views
 
 
 router = DefaultRouter()
-router.register('shopping', views.ShopListViewSet)
+router.register('list', views.ShopListViewSet)
 router.register('item', views.ItemViewSet)
 router.register('category', views.CatViewSet)
 router.register('store', views.StoreViewSet)

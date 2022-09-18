@@ -39,14 +39,23 @@ class ItemSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'price', 'category', 'store']
         read_only_fields = ['id']
 
-    def _get_or_create_category(self, category, instance):
+    def _get_or_create_category(self, categories, instance):
         auth_user = self.context['request'].user
-        for category in category:
+        for category in categories:
             cat_obj, created = Category.objects.get_or_create(
                 user=auth_user,
-                **category
+                **category,
             )
             instance.category.add(cat_obj)
+
+    def _get_or_create_store(self, stores, instance):
+        auth_user = self.context['request'].user
+        for store in stores:
+            store_obj, created = Store.objects.get_or_create(
+                user=auth_user,
+                **store,
+            )
+            instance.store.add(store_obj)
 
     def update(self, instance, validated_data):
         """Update Item."""
@@ -54,6 +63,10 @@ class ItemSerializer(serializers.ModelSerializer):
         if category is not None:
             instance.category.clear()
             self._get_or_create_category(category, instance)
+        store = validated_data.pop('store', None)
+        if store is not None:
+            instance.store.clear()
+            self._get_or_create_store(store, instance)
 
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
@@ -68,5 +81,5 @@ class ShopListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ShopList
-        fields = ['id', 'title', 'items']
+        fields = ['id', 'title', 'items', 'total']
         read_only_fields = ['id']
