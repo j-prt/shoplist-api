@@ -63,7 +63,7 @@ class ShopList(models.Model):
         on_delete=models.CASCADE,
     )
     title = models.CharField(max_length=64)
-    items = models.ManyToManyField('Item')
+    items = models.ManyToManyField('Item', blank=True)
     # total = ???
 
     def __str__(self):
@@ -81,29 +81,29 @@ class Item(models.Model):
         max_digits=5,
         decimal_places=2,
     )
-    # category = models.ManyToManyField('Category')
-    # store = models.ManyToManyField('Store')
+    category = models.ManyToManyField('Category', blank=True)
+    store = models.ManyToManyField('Store', blank=True)
 
     def __str__(self):
         return self.name
 
 
-# class Category(models.Model):
-#     """Item category object."""
-#     user = models.ForeignKey(
-#         settings.AUTH_USER_MODEL,
-#         on_delete=models.CASCADE,
-#     )
-#     name = models.CharField(max_length=64)
+class Category(models.Model):
+    """Item category object."""
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+    name = models.CharField(max_length=64)
 
 
-# class Store(models.Model):
-#     """Store object."""
-#     user = models.ForeignKey(
-#         settings.AUTH_USER_MODEL,
-#         on_delete=models.CASCADE,
-#     )
-#     name = models.CharField(max_length=64)
+class Store(models.Model):
+    """Store object."""
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+    name = models.CharField(max_length=64)
 
 
 
