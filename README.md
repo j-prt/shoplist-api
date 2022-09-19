@@ -8,7 +8,7 @@ The inspiration for this project is an issue I've long had: managing my shopping
 
 ## The API
 
-This is a RESTful API. CRUD (Create, Read, Update, Delete) operations can be performed on most endpoints and allow for creating and managing a shopping list. Python is version 3.9 running on a Docker Alpine (Linux). The DB is a Docker PostgreSQL instance as well. Web framework is Django REST Framework, API documentation is with Swagger via [DRF-Spectacular](https://drf-spectacular.readthedocs.io/en/latest/)
+This is a RESTful API. CRUD (Create, Read, Update, Delete) operations can be performed on most endpoints and allow for creating and managing a shopping list. Python is version 3.9 running on a Docker Alpine (Linux). The DB is a Docker PostgreSQL instance as well. Web framework is Django REST Framework, API documentation is with Swagger via [DRF-Spectacular](https://drf-spectacular.readthedocs.io/en/latest/).
 
 View the live API documentation (interactive) [here](http://ec2-54-221-108-20.compute-1.amazonaws.com/api/docs/).
 
