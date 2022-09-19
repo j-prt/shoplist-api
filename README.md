@@ -21,7 +21,7 @@ The API comprises five models: User, ShopList, Item, Store, and Category.
 - API provides account creation and token-based authentication 
 
 ### ShopList
-- Model for storing lists. ManyToMany relationship with Item
+- Model for storing lists. ManyToMany relationship with Item. Custom total field to reflect the total cost of the items in the list.
 - API provides:
   - Creating a new list
   - Replacing an existing list (PUT)
