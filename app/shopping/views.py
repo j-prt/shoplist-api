@@ -41,6 +41,7 @@ class ShopListViewSet(viewsets.ModelViewSet):
     def add_item(self, request, pk=None):
         sl = self.get_object()
         auth_user = self.request.user
+
         for item in request.data['items']:
             item_obj, created = Item.objects.get_or_create(
                 user=auth_user,

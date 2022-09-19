@@ -93,11 +93,11 @@ class Item(models.Model):
 
 class Category(models.Model):
     """Item category object."""
+    name = models.CharField(max_length=64)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
-    name = models.CharField(max_length=64)
 
     def __str__(self):
         return self.name
@@ -105,11 +105,11 @@ class Category(models.Model):
 
 class Store(models.Model):
     """Store object."""
+    name = models.CharField(max_length=64)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
-    name = models.CharField(max_length=64)
 
     def __str__(self):
         return self.name

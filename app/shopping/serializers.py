@@ -59,6 +59,7 @@ class ItemSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         """Create an item."""
+        print('\n\n\n\n', validated_data)
         category = validated_data.pop('category', [])
         store = validated_data.pop('store', [])
         item = Item.objects.create(**validated_data)
@@ -102,6 +103,14 @@ class ShopListSerializer(serializers.ModelSerializer):
                 **item,
             )
             instance.items.add(item_obj)
+
+    def create(self, validated_data):
+        """Create a shopping list."""
+        items = validated_data.pop('items', [])
+        sl = ShopList.objects.create(**validated_data)
+        self._get_or_create_items(items, sl)
+
+        return sl
 
     def update(self, instance, validated_data):
         """Update shopping list."""
