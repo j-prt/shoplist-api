@@ -37,7 +37,7 @@ The API comprises five models: User, ShopList, Item, Store, and Category.
   - Deletion (DELETE)
   
 ### Store
-- Model for designating the store(s) where an item can be found
+- Model for designating the store(s) where an item can be found.
 - API provides:
   - Replacing existing items (PUT).
   - Partially updating an existing item (PATCH)
