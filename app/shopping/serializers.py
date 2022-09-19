@@ -98,10 +98,28 @@ class ShopListSerializer(serializers.ModelSerializer):
     def _get_or_create_items(self, items, instance):
         auth_user = self.context['request'].user
         for item in items:
+            categories = item.pop('category', [])
+            stores = item.pop('store', [])
             item_obj, created = Item.objects.get_or_create(
                 user=auth_user,
                 **item,
             )
+            if categories is not None:
+                item_obj.category.clear()
+                for cat in categories:
+                    cat_obj, created = Category.objects.get_or_create(
+                        user=auth_user,
+                        **cat,
+                    )
+                    item_obj.category.add(cat_obj)
+            if stores is not None:
+                item_obj.store.clear()
+                for store in stores:
+                    store_obj, created = Store.objects.get_or_create(
+                        user=auth_user,
+                        **store,
+                    )
+                    item_obj.store.add(store_obj)
             instance.items.add(item_obj)
 
     def create(self, validated_data):
