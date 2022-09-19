@@ -156,3 +156,15 @@ class PrivateAPITests(TestCase):
                 user=self.user,
             ).exists()
             self.assertTrue(exists)
+
+    def test_improper_format_error(self):
+        """Test adding an item with the wrong format leads to error."""
+        sl = create_list(user=self.user, title='supplies')
+        item1 = Item.objects.create(user=self.user, name='tape', price=1.75)
+        sl.items.add(item1)
+
+        payload = {'items': [{'name': 'bucket'}]}
+        url = add_item_url(sl.id)
+        res = self.client.post(url, payload, format='json')
+
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
