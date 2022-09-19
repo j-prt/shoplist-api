@@ -8,10 +8,7 @@ from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from core.models import (
-    Item,
-    Store,
-)
+from core.models import Store
 
 from shopping.serializers import StoreSerializer
 
@@ -23,16 +20,10 @@ def detail_url(store_id):
     """Return store detail url."""
     return reverse('shopping:store-detail', args=[store_id])
 
+
 def create_user(**params):
     """Create and return a user."""
     return get_user_model().objects.create_user(**params)
-
-def create_item(user, **params):
-    """Create and return an item."""
-    defaults = {
-        'name': 'apples',
-        'price': '5.99',
-    }
 
 
 class PublicStoreAPITests(TestCase):
@@ -58,8 +49,8 @@ class PrivateStoreAPITests(TestCase):
 
     def test_get_store_list(self):
         """Test retrieving list of stores."""
-        store1 = Store.objects.create(user=self.user, name='Sears')
-        store2 = Store.objects.create(user=self.user, name='Target')
+        Store.objects.create(user=self.user, name='Sears')
+        Store.objects.create(user=self.user, name='Target')
 
         res = self.client.get(STORE_URL)
 

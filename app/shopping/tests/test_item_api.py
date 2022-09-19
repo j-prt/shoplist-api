@@ -23,9 +23,11 @@ def detail_url(item_id):
     """Return item detail url."""
     return reverse('shopping:item-detail', args=[item_id])
 
+
 def create_user(**params):
     """Create and return a user."""
     return get_user_model().objects.create_user(**params)
+
 
 def create_item(user, **params):
     """Create and return an item."""

@@ -8,10 +8,7 @@ from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from core.models import (
-    Category,
-    ShopList
-)
+from core.models import Category
 
 from shopping.serializers import CatSerializer
 
@@ -22,6 +19,7 @@ CAT_URL = reverse('shopping:category-list')
 def detail_url(cat_id):
     """Return category detail url"""
     return reverse('shopping:category-detail', args=[cat_id])
+
 
 def create_user(**params):
     """Create and return a user."""
@@ -60,14 +58,3 @@ class PrivateItemAPITests(TestCase):
         cats = Category.objects.filter(user=self.user).order_by('-name')
         serializer = CatSerializer(cats, many=True)
         self.assertEqual(res.data, serializer.data)
-
-    # def test_creating_new_category(self):
-    #     """Test creating a category."""
-    #     payload = {'name': 'furniture'}
-
-    #     res = self.client.post(CAT_URL, payload, format='json')
-
-    #     self.assertEqual(res.status_code, status.HTTP_201_CREATED)
-    #     category = Category.objects.get(user=self.user, name='furniture')
-    #     serializer = CatSerializer(category)
-    #     self.assertEqual(res.data, serializer.data)

@@ -23,9 +23,11 @@ def detail_url(list_id):
     """Return shopping list detail url"""
     return reverse('shopping:shoplist-detail', args=[list_id])
 
+
 def add_item_url(list_id):
     """Return url for adding an item to the shopping list."""
     return reverse('shopping:shoplist-add-item', args=[list_id])
+
 
 def create_list(user, **params):
     """Create and return a list."""
@@ -36,6 +38,7 @@ def create_list(user, **params):
 
     sl = ShopList.objects.create(user=user, **defaults)
     return sl
+
 
 def create_user(**params):
     return get_user_model().objects.create_user(**params)
@@ -53,6 +56,7 @@ class PublicAPITests(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
+
 class PrivateAPITests(TestCase):
     """Test authenticated API access"""
 
@@ -66,8 +70,8 @@ class PrivateAPITests(TestCase):
 
     def test_get_shoplists(self):
         """Test retrieving shopping lists."""
-        sl1 = ShopList.objects.create(user=self.user, title='Groceries')
-        sl2 = ShopList.objects.create(user=self.user, title='Supplies')
+        ShopList.objects.create(user=self.user, title='Groceries')
+        ShopList.objects.create(user=self.user, title='Supplies')
 
         res = self.client.get(LIST_URL)
 
@@ -156,15 +160,3 @@ class PrivateAPITests(TestCase):
                 user=self.user,
             ).exists()
             self.assertTrue(exists)
-
-    # def test_improper_format_error(self):
-    #     """Test adding an item with the wrong format leads to error."""
-    #     sl = create_list(user=self.user, title='supplies')
-    #     item1 = Item.objects.create(user=self.user, name='tape', price=1.75)
-    #     sl.items.add(item1)
-
-    #     payload = {'items': [{'name': 'bucket'}]}
-    #     url = add_item_url(sl.id)
-    #     res = self.client.post(url, payload, format='json')
-
-    #     self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
