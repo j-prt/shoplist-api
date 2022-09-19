@@ -61,13 +61,13 @@ class PrivateItemAPITests(TestCase):
         serializer = CatSerializer(cats, many=True)
         self.assertEqual(res.data, serializer.data)
 
-    def create_new_category(self):
-        """Test creating a category."""
-        payload = {'name': 'furniture'}
+    # def test_creating_new_category(self):
+    #     """Test creating a category."""
+    #     payload = {'name': 'furniture'}
 
-        res = self.client.post(CAT_URL)
+    #     res = self.client.post(CAT_URL, payload, format='json')
 
-        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
-        category = Category.objects.get(user=self.user, name='furniture')
-        serializer = CatSerializer(category)
-        self.assertEqual(res.data, serializer.data)
+    #     self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+    #     category = Category.objects.get(user=self.user, name='furniture')
+    #     serializer = CatSerializer(category)
+    #     self.assertEqual(res.data, serializer.data)

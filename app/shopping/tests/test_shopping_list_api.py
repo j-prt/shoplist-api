@@ -23,6 +23,10 @@ def detail_url(list_id):
     """Return shopping list detail url"""
     return reverse('shopping:shoplist-detail', args=[list_id])
 
+def add_item_url(list_id):
+    """Return url for adding an item to the shopping list."""
+    return reverse('shopping:shoplist-add-item', args=[list_id])
+
 def create_list(user, **params):
     """Create and return a list."""
     defaults = {
@@ -119,3 +123,36 @@ class PrivateAPITests(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data['total'], item1.price + item2.price)
+
+    def test_partial_update(self):
+        """Test updating part of the shopping list."""
+        sl = create_list(user=self.user, title='groceries')
+        item1 = Item.objects.create(user=self.user, name='apple', price=.75)
+        sl.items.add(item1)
+
+        payload = {'items': [{'name': 'fish', 'price': 9.50}]}
+        url = detail_url(sl.id)
+        res = self.client.patch(url, payload, format='json')
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        shoplist = ShopList.objects.get(user=self.user, title='groceries')
+        self.assertEqual(shoplist.items.count(), 1)
+
+    def test_add_item_to_existing_list(self):
+        """Test adding an item to a shopping list."""
+        sl = create_list(user=self.user)
+        item1 = Item.objects.create(user=self.user, name='pasta', price=1.25)
+        sl.items.add(item1)
+
+        payload = {'items': [{'name': 'tomatoes', 'price': .50}]}
+        url = add_item_url(sl.id)
+        res = self.client.post(url, payload, format='json')
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        shoplist = ShopList.objects.get(user=self.user, title=sl.title)
+        self.assertEqual(shoplist.items.count(), 2)
+        for item in payload['items']:
+            exists = shoplist.items.filter(
+                name=item['name'],
+                user=self.user,
+            ).exists()
+            self.assertTrue(exists)

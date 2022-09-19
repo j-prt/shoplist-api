@@ -57,6 +57,16 @@ class ItemSerializer(serializers.ModelSerializer):
             )
             instance.store.add(store_obj)
 
+    def create(self, validated_data):
+        """Create an item."""
+        category = validated_data.pop('category', [])
+        store = validated_data.pop('store', [])
+        item = Item.objects.create(**validated_data)
+        self._get_or_create_category(category, item)
+        self._get_or_create_store(store, item)
+
+        return item
+
     def update(self, instance, validated_data):
         """Update Item."""
         category = validated_data.pop('category', None)
@@ -77,9 +87,31 @@ class ItemSerializer(serializers.ModelSerializer):
 
 class ShopListSerializer(serializers.ModelSerializer):
     """Serializer for shopping lists."""
-    items = ItemSerializer
+    items = ItemSerializer(many=True, required=False)
 
     class Meta:
         model = ShopList
         fields = ['id', 'title', 'items', 'total']
         read_only_fields = ['id']
+
+    def _get_or_create_items(self, items, instance):
+        auth_user = self.context['request'].user
+        for item in items:
+            item_obj, created = Item.objects.get_or_create(
+                user=auth_user,
+                **item,
+            )
+            instance.items.add(item_obj)
+
+    def update(self, instance, validated_data):
+        """Update shopping list."""
+        items = validated_data.pop('items', None)
+        if items is not None:
+            instance.items.clear()
+            self._get_or_create_items(items, instance)
+
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+
+        instance.save()
+        return instance
