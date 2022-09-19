@@ -1,10 +1,6 @@
 """
 Tests for models.
 """
-from unittest.mock import patch
-
-from decimal import Decimal
-
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 
@@ -58,44 +54,39 @@ class ModelTests(TestCase):
         self.assertTrue(user.is_superuser)
         self.assertTrue(user.is_staff)
 
-    def test_create_recipe(self):
-        """Test creating recipe is successful."""
-        user = get_user_model().objects.create_user(
-            'test@example.com',
-            'testpass123',
-        )
-        recipe = models.Recipe.objects.create(
-            user=user,
-            title='Sample recipe name',
-            time_minutes=5,
-            price=Decimal('5.50'),
-            description='Sample recipe description',
-        )
-
-        self.assertEquals(str(recipe), recipe.title)
-
-    def test_create_tag(self):
-        """Test that tag creation works."""
+    def test_create_shopping_list(self):
+        """Test creating shopping list is successful."""
         user = create_user()
-        tag = models.Tag.objects.create(user=user, name='Tag1')
-
-        self.assertEqual(str(tag), tag.name)
-
-    def test_create_ingredient(self):
-        """Test ingredient creation."""
-        user = create_user()
-        ingredient = models.Ingredient.objects.create(
+        sl = models.ShopList.objects.create(
             user=user,
-            name='Ingredient1',
+            title='slist',
         )
 
-        self.assertEqual(str(ingredient), ingredient.name)
+        self.assertEquals(str(sl), sl.title)
 
-    @patch('core.models.uuid.uuid4')
-    def test_recipe_file_name_uuid(self, mock_uuid):
-        """Test generating image path."""
-        uuid = 'test-uuid'
-        mock_uuid.return_value = uuid
-        file_path = models.recipe_image_file_path(None, 'example.jpg')
+    def test_create_item(self):
+        """Test that item creation works."""
+        user = create_user()
+        item = models.Item.objects.create(user=user, name='stuff', price=999)
 
-        self.assertEqual(file_path, f'uploads/recipe/{uuid}.jpg')
+        self.assertEqual(str(item), item.name)
+
+    def test_create_category(self):
+        """Test category creation."""
+        user = create_user()
+        category = models.Category.objects.create(
+            user=user,
+            name='grocery',
+        )
+
+        self.assertEqual(str(category), category.name)
+
+    def test_create_store(self):
+        """Test store creation."""
+        user = create_user()
+        store = models.Store.objects.create(
+            user=user,
+            name='bcliquor',
+        )
+
+        self.assertEqual(str(store), store.name)
