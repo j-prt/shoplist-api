@@ -4,7 +4,7 @@ RESTful API for creating and managing shopping lists using Django REST Framework
 
 ## Overview
 
-The inspiration for this project is an issue I've long had: managing my shopping lists. Every time I remember I have to buy something I make a note in my phone, on a postit, on my hand, on an index card.. etc. When it comes time to do the deed, I find that I'm scraping together all this data and trying to make a coherent list of what I need to buy, and where. And I have no idea how much it will cost. 
+The inspiration for this project is an issue I've long had: managing my shopping lists. Every time I remember I have to buy something I make a note in my phone, on a postit, on my hand, on an index card.. etc. When it comes time to actually do my shop, I find that I'm scraping together all this data and trying to make a coherent list of what I need to buy, and where. And I have no idea how much it will cost. 
 
 ## The API
 
