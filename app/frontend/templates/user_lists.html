@@ -8,10 +8,18 @@
 <h1>My ShopLists</h1>
 {% endif %}
 
+<div class="container mb-2">
+  <a href="" class="btn btn-primary">Create New ShopList</a>
+</div>
+
 <div class="container">
-  {% for shoplist in shoplist_list %}
-  <p>{{ shoplist.title }}</p>
+  <ul class="list-group">
+    {% for shoplist in shoplist_list %}
+    <li class="list-group-item"><a href="{% url 'lists_detail' pk=shoplist.id slug=shoplist.title %}">{{ shoplist.title }}</a></li>
+  {% empty %}
+  <p>Nothing here. Create a new list?</p>
   {% endfor %}
+  </ul>
 </div>
 
 {% endblock body %}

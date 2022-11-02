@@ -33,6 +33,12 @@ class UserCreateView(generic.CreateView):
 class UserListsView(LoginRequiredMixin, generic.ListView):
     model = models.ShopList
     template_name = 'user_lists.html'
+    ordering = ['-id']
+
+
+class UserListsDetailView(LoginRequiredMixin, generic.DetailView):
+    model = models.ShopList
+    template_name = 'lists_detail.html'
 
 
 

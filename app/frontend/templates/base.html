@@ -11,7 +11,7 @@
 </head>
 <body>
   {% comment %} <nav class="navbar navbar-expand-lg sticky-top navbar-dark" style="background-color: #6CB034;"> {% endcomment %}
-  <nav class="navbar navbar-expand-lg sticky-top navbar-dark" style="background-color: #1a8753;">
+  <nav class="navbar navbar-expand-sm sticky-top navbar-dark" style="background-color: #1a8753;">
     <div class="container-fluid">
       <a class="navbar-brand abs" href="{% url 'index' %}">ShopList</a>
       <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,11 +37,14 @@
               <li><a class="dropdown-item" href="#">Add New Item</a></li>
             </ul>
           </li>
+          <li class="nav-item">
+            <a href="" class="nav-link">My Tags</a>
+          </li>
         </ul>
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item">
             {% if user.is_authenticated %}
-            <a class="nav-link" href="">Account</a>
+            <a class="nav-link" href="#">Account</a>
             {% else %}
             <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
             {% endif %}
