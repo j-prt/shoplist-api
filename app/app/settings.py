@@ -144,6 +144,8 @@ STATIC_ROOT = '/vol/web/static'
 LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'goodbye'
 
+LOGIN_URL = 'login'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 

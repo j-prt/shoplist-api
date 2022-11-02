@@ -53,12 +53,18 @@ class ShopList(models.Model):
         on_delete=models.CASCADE,
         related_name='shoplists',
     )
-    title = models.CharField(max_length=64)
+    title = models.CharField(max_length=64, blank=True)
     items = models.ManyToManyField('Item', blank=True)
 
     @property
     def total(self):
         return sum([item.price for item in self.items.all()])
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if not self.title:
+            self.title = f'ShopList{self.id}'
+            self.save(*args, **kwargs)
 
     def __str__(self):
         return self.title
