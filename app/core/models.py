@@ -35,6 +35,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     """User in the system."""
+    display_name = models.CharField(max_length=50, blank=True)
     email = models.EmailField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
@@ -50,6 +51,7 @@ class ShopList(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
+        related_name='shoplists',
     )
     title = models.CharField(max_length=64)
     items = models.ManyToManyField('Item', blank=True)
@@ -68,6 +70,7 @@ class Item(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
+        related_name='items',
     )
     price = models.DecimalField(
         max_digits=5,
@@ -86,6 +89,7 @@ class Category(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
+        related_name='categories',
     )
 
     def __str__(self):
@@ -98,6 +102,7 @@ class Store(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
+        related_name='stores',
     )
 
     def __str__(self):
