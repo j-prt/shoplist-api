@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'user',
     'shopping',
     'frontend',
+    'django_bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -139,6 +140,8 @@ MEDIA_URL = '/static/media/'
 
 MEDIA_ROOT = '/vol/web/media'
 STATIC_ROOT = '/vol/web/static'
+
+LOGIN_REDIRECT_URL = 'index'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
