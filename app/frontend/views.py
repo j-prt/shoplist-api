@@ -6,7 +6,8 @@ from django.shortcuts import render
 
 
 def index(request):
-    """This is a docstring"""
-    return render(request, 'index.html', {})
+    """View for the homepage."""
+    return render(request, 'index.html')
+
 
 # Create your views here.
