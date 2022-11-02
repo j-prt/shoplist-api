@@ -22,3 +22,6 @@ class UserCreateForm(UserCreationForm):
             = 'something secret'
         self.fields['password2'].widget.attrs['placeholder'] \
             = 'something secret again'
+
+        self.fields['email'].widget.attrs['autofocus'] = False
+        self.fields['display_name'].widget.attrs['autofocus'] = True
