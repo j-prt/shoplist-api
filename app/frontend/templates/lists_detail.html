@@ -2,5 +2,28 @@
 
 {% block body %}
 
-<h1>Title</h1>
+<h1>{{ shoplist.title }}</h1>
+
+<div class="card" style="width: 18rem;">
+  <img src="https://imageio.forbes.com/specials-images/imageserve/1209106512/Daily-Life-During-Coronavirus-Epidemic-In-Toronto/960x0.jpg?format=jpg&width=960" class="card-img-top" alt="">
+  <div class="card-body">
+    <h5 class="card-title">{{shoplist.title}}</h5>
+    <p class="card-text">Total cost: ${{shoplist.total}}</p>
+  </div>
+    <ul class="list-group list-group-flush">
+      {% for item in shoplist.items.all %}
+      <li class="list-group-item">
+        {{ item }} ${{ item.price }}
+      </li>
+      {% endfor %}
+    </ul>
+  <div class="card-body">
+    <a href="#" class="btn btn-primary">Edit</a>
+    <a href="#" class="btn btn-danger">Delete</a>
+  </div>
+  <div class="card-body">
+    <a href="#" class="btn btn-success">Mark Complete</a>
+  </div>
+</div>
+
 {% endblock body %}
