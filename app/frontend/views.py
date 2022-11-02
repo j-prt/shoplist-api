@@ -4,7 +4,7 @@ Views for HTML pages.
 
 from django.shortcuts import render
 from django.views import generic
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse, reverse_lazy  # noqa
 
 from frontend import forms
 

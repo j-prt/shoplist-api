@@ -14,7 +14,11 @@ class UserCreateForm(UserCreationForm):
         super().__init__(*args, **kwargs)
         self.fields['display_name'].label = 'Display name'
         self.fields['email'].label = 'Email address'
-        self.fields['display_name'].widget.attrs['placeholder'] = 'something cool'
-        self.fields['email'].widget.attrs['placeholder'] = 'something real'
-        self.fields['password1'].widget.attrs['placeholder'] = 'something secret'
-        self.fields['password2'].widget.attrs['placeholder'] = 'something secret again'
+        self.fields['display_name'].widget.attrs['placeholder'] \
+            = 'something cool'
+        self.fields['email'].widget.attrs['placeholder'] \
+            = 'something real'
+        self.fields['password1'].widget.attrs['placeholder'] \
+            = 'something secret'
+        self.fields['password2'].widget.attrs['placeholder'] \
+            = 'something secret again'
