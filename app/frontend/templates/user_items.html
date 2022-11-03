@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+{% if user.display_name %}
+<h1>{{ user.display_name }}'s Items</h1>
+{% else %}
+<h1>My Items</h1>
+{% endif %}
+
+<div class="container mb-2">
+  <a href="" class="btn btn-primary">Create New Item</a>
+</div>
+
+<div class="container">
+  <ul class="list-group">
+    {% for item in item_list %}
+    <li class="list-group-item">
+      <a href=""><h3>{{ item.name }}</h3></a>
+      <p>Category: {{ item.category }}</p>
+      <p>Store: {{ item.store }}</p>
+
+    </li>
+    {% empty %}
+    <p>Nothing here. Create a new list?</p>
+    {% endfor %}
+  </ul>
+</div>
+
+{% endblock body %}
