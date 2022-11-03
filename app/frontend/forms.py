@@ -39,6 +39,10 @@ class ListCreateForm(forms.ModelForm):
                 'class':'selectpicker',
                 'data-live-search':'true',
                 'data-style':'btn-primary',
-                'data-selected-text-format':'count'
+                'data-selected-text-format':'count',
+            }),
+            'title':forms.TextInput(attrs={
+                'class':'form-control',
+                'style':'max-width: 270px;'
             }),
         }

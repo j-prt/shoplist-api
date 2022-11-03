@@ -41,10 +41,12 @@ class UserListsDetailView(LoginRequiredMixin, generic.DetailView):
     template_name = 'lists_detail.html'
 
 
-class UserListCreateView(LoginRequiredMixin, generic.CreateView):
+class ListCreateView(LoginRequiredMixin, generic.CreateView):
     form_class = forms.ListCreateForm
     template_name = 'new_list.html'
 
-
-
-# Create your views here.
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.user = self.request.user
+        self.object.save()
+        return super().form_valid(form)

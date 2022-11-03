@@ -2,6 +2,7 @@
 Database models.
 """
 from django.conf import settings
+from django.urls import reverse
 from django.db import models
 from django.contrib.auth.models import (
     AbstractBaseUser,
@@ -65,6 +66,10 @@ class ShopList(models.Model):
         if not self.title:
             self.title = f'ShopList{self.id}'
             self.save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('lists_detail', kwargs={'pk': self.pk, 'slug':self.title})
+
 
     def __str__(self):
         return self.title
