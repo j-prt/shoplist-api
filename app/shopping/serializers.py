@@ -31,22 +31,21 @@ class StoreSerializer(serializers.ModelSerializer):
 
 class ItemSerializer(serializers.ModelSerializer):
     """Serializer for list items."""
-    category = CatSerializer(many=True, required=False)
-    store = StoreSerializer(many=True, required=False)
+    category = CatSerializer(many=False, required=False)
+    store = StoreSerializer(many=False, required=False)
 
     class Meta:
         model = Item
         fields = ['id', 'name', 'price', 'category', 'store']
         read_only_fields = ['id']
 
-    def _get_or_create_category(self, categories, instance):
+    def _get_or_create_category(self, category, instance):
         auth_user = self.context['request'].user
-        for category in categories:
-            cat_obj, created = Category.objects.get_or_create(
-                user=auth_user,
-                **category,
-            )
-            instance.category.add(cat_obj)
+        cat_obj, created = Category.objects.get_or_create(
+            user=auth_user,
+            **category,
+        )
+        instance.category = cat_obj
 
     def _get_or_create_store(self, stores, instance):
         auth_user = self.context['request'].user
@@ -72,11 +71,14 @@ class ItemSerializer(serializers.ModelSerializer):
         """Update Item."""
         category = validated_data.pop('category', None)
         if category is not None:
-            instance.category.clear()
+            if instance.category:
+                instance.category.delete()
             self._get_or_create_category(category, instance)
+            print(instance.category)
         store = validated_data.pop('store', None)
         if store is not None:
-            instance.store.clear()
+            if instance.store:
+                instance.store.delete()
             self._get_or_create_store(store, instance)
 
         for attr, value in validated_data.items():
@@ -98,28 +100,28 @@ class ShopListSerializer(serializers.ModelSerializer):
     def _get_or_create_items(self, items, instance):
         auth_user = self.context['request'].user
         for item in items:
-            categories = item.pop('category', [])
-            stores = item.pop('store', [])
+            category = item.pop('category', None)
+            store = item.pop('store', None)
             item_obj, created = Item.objects.get_or_create(
                 user=auth_user,
                 **item,
             )
-            if categories is not None:
-                item_obj.category.clear()
-                for cat in categories:
-                    cat_obj, created = Category.objects.get_or_create(
-                        user=auth_user,
-                        **cat,
-                    )
-                    item_obj.category.add(cat_obj)
-            if stores is not None:
-                item_obj.store.clear()
-                for store in stores:
-                    store_obj, created = Store.objects.get_or_create(
-                        user=auth_user,
-                        **store,
-                    )
-                    item_obj.store.add(store_obj)
+            if category is not None:
+                if item_obj.category:
+                    item_obj.category.delete()
+                cat_obj, created = Category.objects.get_or_create(
+                    user=auth_user,
+                    **category,
+                )
+                item_obj.category.add(cat_obj)
+            if store is not None:
+                if item_obj.store:
+                    item_obj.store.delete()
+                store_obj, created = Store.objects.get_or_create(
+                    user=auth_user,
+                    **store,
+                )
+                item_obj.store.add(store_obj)
             instance.items.add(item_obj)
 
     def create(self, validated_data):

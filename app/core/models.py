@@ -87,8 +87,18 @@ class Item(models.Model):
         max_digits=5,
         decimal_places=2,
     )
-    category = models.ManyToManyField('Category', blank=True)
-    store = models.ManyToManyField('Store', blank=True)
+    category = models.ForeignKey(
+        'Category',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+    )
+    store = models.ForeignKey(
+        'Store',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+    )
 
     def __str__(self):
         return self.name

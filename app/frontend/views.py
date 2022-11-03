@@ -50,3 +50,8 @@ class ListCreateView(LoginRequiredMixin, generic.CreateView):
         self.object.user = self.request.user
         self.object.save()
         return super().form_valid(form)
+
+
+class UserItemsView(LoginRequiredMixin, generic.ListView):
+    model = models.Item
+    template_name = 'user_items.html'

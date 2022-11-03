@@ -78,7 +78,7 @@ class PrivateItemAPITests(TestCase):
         item = create_item(user=self.user)
 
         payload = {
-            'category': [{'name': 'Produce'}]
+            'category': {'name': 'Produce'}
         }
 
         url = detail_url(item.id)
@@ -86,4 +86,5 @@ class PrivateItemAPITests(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         category = Category.objects.get(user=self.user, name='Produce')
-        self.assertIn(category, item.category.all())
+        item.refresh_from_db()
+        self.assertEqual(category, item.category)

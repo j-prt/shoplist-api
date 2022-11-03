@@ -137,6 +137,7 @@ class PrivateAPITests(TestCase):
         payload = {'items': [{'name': 'fish', 'price': 9.50}]}
         url = detail_url(sl.id)
         res = self.client.patch(url, payload, format='json')
+
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         shoplist = ShopList.objects.get(user=self.user, title='groceries')
         self.assertEqual(shoplist.items.count(), 1)
