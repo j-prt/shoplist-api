@@ -55,3 +55,4 @@ class ListCreateView(LoginRequiredMixin, generic.CreateView):
 class UserItemsView(LoginRequiredMixin, generic.ListView):
     model = models.Item
     template_name = 'user_items.html'
+    ordering = ['name']

@@ -8,23 +8,20 @@
 <h1>My Items</h1>
 {% endif %}
 
-<div class="container mb-2">
-  <a href="" class="btn btn-primary">Create New Item</a>
-</div>
+{# Cycle tags are being used here to define the 3-column row structure #}
+{% for item in item_list %}
 
-<div class="container">
-  <ul class="list-group">
-    {% for item in item_list %}
-    <li class="list-group-item">
-      <a href=""><h3>{{ item.name }}</h3></a>
-      <p>Category: {{ item.category }}</p>
-      <p>Store: {{ item.store }}</p>
+  {% cycle '<div class="row">' '' '' as new_row silent %}
+  {% cycle '' '' '</div>' as new_row_close silent %}
 
-    </li>
-    {% empty %}
-    <p>Nothing here. Create a new list?</p>
-    {% endfor %}
-  </ul>
-</div>
+    {{ new_row }}
+        <ul class="list-group col" style="max-width: 33%;">
+          <li class="list-group-item"><h4>{{ item.name }}</h4>${{ item.price }}</li>
+          <li class="list-group-item">Dept: {{ item.category }}</li>
+          <li class="list-group-item">Store: {{ item.store }}</li>
+        </ul>
+    {{ new_row_close }}
+
+{% endfor %}
 
 {% endblock body %}
