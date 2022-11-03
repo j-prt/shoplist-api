@@ -35,7 +35,10 @@ class ListCreateForm(forms.ModelForm):
         model = models.ShopList
         fields = ('title', 'items')
         widgets = {
-            'items':forms.SelectMultiple(attrs={'class':'selectpicker',
-                                                'data-live-search':'true',
-                                                'data-style':'btn-info'}),
+            'items':forms.SelectMultiple(attrs={
+                'class':'selectpicker',
+                'data-live-search':'true',
+                'data-style':'btn-primary',
+                'data-selected-text-format':'count'
+            }),
         }
