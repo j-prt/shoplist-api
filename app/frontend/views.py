@@ -41,5 +41,10 @@ class UserListsDetailView(LoginRequiredMixin, generic.DetailView):
     template_name = 'lists_detail.html'
 
 
+class UserListCreateView(LoginRequiredMixin, generic.CreateView):
+    form_class = forms.ListCreateForm
+    template_name = 'new_list.html'
+
+
 
 # Create your views here.

@@ -3,6 +3,9 @@ Form classes for use on the front end.
 """
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
+from django import forms
+
+from core import models
 
 
 class UserCreateForm(UserCreationForm):
@@ -25,3 +28,14 @@ class UserCreateForm(UserCreationForm):
 
         self.fields['email'].widget.attrs['autofocus'] = False
         self.fields['display_name'].widget.attrs['autofocus'] = True
+
+class ListCreateForm(forms.ModelForm):
+    # items = forms.ModelMultipleChoiceField(models.Item.objects.all())
+    class Meta:
+        model = models.ShopList
+        fields = ('title', 'items')
+        widgets = {
+            'items':forms.SelectMultiple(attrs={'class':'selectpicker',
+                                                'data-live-search':'true',
+                                                'data-style':'btn-info'}),
+        }
