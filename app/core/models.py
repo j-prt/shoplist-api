@@ -46,6 +46,13 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
 
+class NameField(models.CharField):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def get_prep_value(self, value):
+        return str(value).title()
+
 
 class ShopList(models.Model):
     """Shopping list object."""
@@ -77,7 +84,7 @@ class ShopList(models.Model):
 
 class Item(models.Model):
     """Item object."""
-    name = models.CharField(max_length=64)
+    name = NameField(max_length=64)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -106,10 +113,16 @@ class Item(models.Model):
     def get_absolute_url(self):
         return reverse('user_items')
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['name', 'user'],
+                                    name='unique_item'),
+        ]
+
 
 class Category(models.Model):
     """Item category object."""
-    name = models.CharField(max_length=64)
+    name = NameField(max_length=64)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -119,10 +132,16 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['name', 'user'],
+                                    name='unique_category'),
+        ]
+
 
 class Store(models.Model):
     """Store object."""
-    name = models.CharField(max_length=64)
+    name = NameField(max_length=64)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -131,3 +150,9 @@ class Store(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['name', 'user'],
+                                    name='unique_store'),
+        ]

@@ -63,7 +63,7 @@ class PrivateItemAPITests(TestCase):
 
     def test_get_item_list(self):
         """Test retrieving list of items."""
-        create_item(user=self.user)
+        create_item(user=self.user, name='ananas')
         create_item(user=self.user)
 
         res = self.client.get(ITEM_URL)

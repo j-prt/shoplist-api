@@ -58,7 +58,6 @@ class ItemSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         """Create an item."""
-        print('\n\n\n\n', validated_data)
         category = validated_data.pop('category', [])
         store = validated_data.pop('store', [])
         item = Item.objects.create(**validated_data)
@@ -74,7 +73,6 @@ class ItemSerializer(serializers.ModelSerializer):
             if instance.category:
                 instance.category.delete()
             self._get_or_create_category(category, instance)
-            print(instance.category)
         store = validated_data.pop('store', None)
         if store is not None:
             if instance.store:
