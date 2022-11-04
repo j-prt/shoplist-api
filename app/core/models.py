@@ -136,6 +136,7 @@ class Category(models.Model):
         return self.name
 
     class Meta:
+        verbose_name_plural = "categories"
         constraints = [
             models.UniqueConstraint(fields=['name', 'user'],
                                     name='unique_category'),

@@ -35,10 +35,18 @@ class UserListsView(LoginRequiredMixin, generic.ListView):
     template_name = 'user_lists.html'
     ordering = ['-id']
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(user_id=self.request.user.id)
+
 
 class UserListsDetailView(LoginRequiredMixin, generic.DetailView):
     model = models.ShopList
     template_name = 'lists_detail.html'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(user_id=self.request.user.id)
 
 
 class ListCreateView(LoginRequiredMixin, generic.CreateView):
@@ -51,11 +59,20 @@ class ListCreateView(LoginRequiredMixin, generic.CreateView):
         self.object.save()
         return super().form_valid(form)
 
+    def get_form(self, form_class=form_class):
+        form = super().get_form(form_class)
+        form.fields['items'].queryset = form.fields['items'].queryset.filter(user=self.request.user)
+        return form
+
 
 class UserItemsView(LoginRequiredMixin, generic.ListView):
     model = models.Item
     template_name = 'user_items.html'
     ordering = ['name']
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(user=self.request.user)
 
 
 class ItemCreateView(LoginRequiredMixin, generic.CreateView):
@@ -67,6 +84,8 @@ class ItemCreateView(LoginRequiredMixin, generic.CreateView):
         form = super().get_form(form_class)
         form.fields['name'].label = 'Item name'
         form.fields['category'].label = 'Department'
+        form.fields['category'].queryset = form.fields['category'].queryset.filter(user=self.request.user)
+        form.fields['store'].queryset = form.fields['category'].queryset.filter(user=self.request.user)
         return form
 
     def form_valid(self, form):
@@ -81,6 +100,10 @@ class DeleteItemView(LoginRequiredMixin, generic.DeleteView):
     template_name = 'item_confirm_delete.html'
     success_url = reverse_lazy('user_items')
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(user_id=self.request.user.id)
+
 
 class ItemTagsView(LoginRequiredMixin, generic.ListView):
     template_name = 'user_tags.html'
@@ -94,17 +117,29 @@ class ItemTagsView(LoginRequiredMixin, generic.ListView):
         })
         return context
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(user_id=self.request.user.id)
+
 
 class DeleteStoreView(LoginRequiredMixin, generic.DeleteView):
     model = models.Store
     template_name = 'store_confirm_delete.html'
     success_url = reverse_lazy('user_tags')
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(user_id=self.request.user.id)
+
 
 class DeleteCategoryView(LoginRequiredMixin, generic.DeleteView):
     model = models.Category
     template_name = 'category_confirm_delete.html'
     success_url = reverse_lazy('user_tags')
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(user_id=self.request.user.id)
 
 
 class StoreCreateView(LoginRequiredMixin, generic.CreateView):
