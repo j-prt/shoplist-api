@@ -38,7 +38,7 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a href="{% url 'user_tags' %}" class="nav-link">My Tags</a>
+            <a href="{% url 'user_tags' %}" class="nav-link {% if user.is_authenticated == False %}disabled{% endif %}">My Tags</a>
           </li>
         </ul>
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">

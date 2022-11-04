@@ -85,7 +85,7 @@ class ItemCreateView(LoginRequiredMixin, generic.CreateView):
         form.fields['name'].label = 'Item name'
         form.fields['category'].label = 'Department'
         form.fields['category'].queryset = form.fields['category'].queryset.filter(user=self.request.user)
-        form.fields['store'].queryset = form.fields['category'].queryset.filter(user=self.request.user)
+        form.fields['store'].queryset = form.fields['store'].queryset.filter(user=self.request.user)
         return form
 
     def form_valid(self, form):
@@ -113,7 +113,9 @@ class ItemTagsView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context.update({
-            'store_list': models.Store.objects.order_by('name'),
+            'store_list': models.Store.objects
+                          .filter(user=self.request.user)
+                          .order_by('name'),
         })
         return context
 
