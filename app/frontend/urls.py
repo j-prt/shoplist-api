@@ -14,8 +14,9 @@ urlpatterns = [
     path('goodbye/', views.GoodbyeView.as_view(), name='goodbye'),
     path('signup/', views.UserCreateView.as_view(), name='signup'),
     path('my_lists/', views.UserListsView.as_view(), name='user_lists'),
-    path('list/<pk>/<slug>', views.UserListsDetailView.as_view(), name='lists_detail'),
+    path('my_lists/<pk>/<slug>', views.UserListsDetailView.as_view(), name='lists_detail'),
     path('new/', views.ListCreateView.as_view(), name='new_list'),
     path('my_items/', views.UserItemsView.as_view(), name='user_items'),
     path('new_item/', views.ItemCreateView.as_view(), name='new_item'),
+    path('my_items/delete/<pk>', views.DeleteItemView.as_view(), name='delete_item',)
 ]

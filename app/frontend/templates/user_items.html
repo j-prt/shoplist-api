@@ -22,7 +22,19 @@
 
     {{ new_row }}
         <ul class="list-group col" style="max-width: 33%;">
-          <li class="list-group-item"><h4>{{ item.name }}</h4>${{ item.price }}</li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col">
+                <h4>{{ item.name }}</h4>
+              </div>
+              <div class="col text-end">
+                <a href="" class="col"><span style="font-size: 1rem;" class="badge bg-danger">Delete</span></a>
+              </div>
+            </div>
+            <div class="row">
+              <p class="col mb-0">${{ item.price }}</p>
+            </div>
+          </li>
           <li class="list-group-item">Dept: {{ item.category }}</li>
           <li class="list-group-item">Store: {{ item.store }}</li>
         </ul>

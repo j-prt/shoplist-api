@@ -74,3 +74,9 @@ class ItemCreateView(LoginRequiredMixin, generic.CreateView):
         self.object.user = self.request.user
         self.object.save()
         return super().form_valid(form)
+
+
+class DeleteItemView(LoginRequiredMixin, generic.DeleteView):
+    model = models.Item
+    template_name = 'item_confirm_delete.html'
+    success_url = reverse_lazy('user_items')
