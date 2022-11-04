@@ -17,4 +17,5 @@ urlpatterns = [
     path('list/<pk>/<slug>', views.UserListsDetailView.as_view(), name='lists_detail'),
     path('new/', views.ListCreateView.as_view(), name='new_list'),
     path('my_items/', views.UserItemsView.as_view(), name='user_items'),
+    path('new_item/', views.ItemCreateView.as_view(), name='new_item'),
 ]

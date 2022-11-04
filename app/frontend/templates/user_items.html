@@ -1,17 +1,23 @@
 {% extends 'base.html' %}
 
 {% block body %}
+<div class="row">
+  {% if user.display_name %}
+  <h1 class="col">{{ user.display_name }}'s Items</h1>
+  <a href="{% url 'new_item' %}" style="max-width: 20%;" class="btn btn-primary col mb-2 mt-2 me-4" >Add Item</a>
+  {% else %}
+  <h1>My Items</h1>
+  {% endif %}
 
-{% if user.display_name %}
-<h1>{{ user.display_name }}'s Items</h1>
-{% else %}
-<h1>My Items</h1>
-{% endif %}
+</div>
+
+
+
 
 {# Cycle tags are being used here to define the 3-column row structure #}
 {% for item in item_list %}
 
-  {% cycle '<div class="row">' '' '' as new_row silent %}
+  {% cycle '<div class="row mb-2">' '' '' as new_row silent %}
   {% cycle '' '' '</div>' as new_row_close silent %}
 
     {{ new_row }}

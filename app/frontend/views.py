@@ -56,3 +56,21 @@ class UserItemsView(LoginRequiredMixin, generic.ListView):
     model = models.Item
     template_name = 'user_items.html'
     ordering = ['name']
+
+
+class ItemCreateView(LoginRequiredMixin, generic.CreateView):
+    model = models.Item
+    template_name = 'new_item.html'
+    fields = ('name', 'price', 'category', 'store')
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['name'].label = 'Item name'
+        form.fields['category'].label = 'Department'
+        return form
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.user = self.request.user
+        self.object.save()
+        return super().form_valid(form)

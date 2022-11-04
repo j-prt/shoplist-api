@@ -29,8 +29,8 @@ class UserCreateForm(UserCreationForm):
         self.fields['email'].widget.attrs['autofocus'] = False
         self.fields['display_name'].widget.attrs['autofocus'] = True
 
+
 class ListCreateForm(forms.ModelForm):
-    # items = forms.ModelMultipleChoiceField(models.Item.objects.all())
     class Meta:
         model = models.ShopList
         fields = ('title', 'items')

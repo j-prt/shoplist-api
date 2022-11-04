@@ -10,20 +10,25 @@
     <h5 class="card-title">{{shoplist.title}}</h5>
     <p class="card-text">Total cost: ${{shoplist.total}}</p>
   </div>
-    <ul class="list-group list-group-flush">
-      {% for item in shoplist.items.all %}
-      <li class="list-group-item">
-        {{ item }} ${{ item.price }}
-      </li>
-      {% endfor %}
-    </ul>
-  <div class="card-body">
-    <a href="#" class="btn btn-primary">Edit</a>
-    <a href="#" class="btn btn-danger">Delete</a>
-  </div>
-  <div class="card-body">
-    <a href="#" class="btn btn-success">Mark Complete</a>
-  </div>
+  <ul class="list-group list-group-flush">
+    {% for item in shoplist.items.all %}
+    <li class="list-group-item">
+      {{ item }} ${{ item.price }}
+    </li>
+    {% endfor %}
+    <li class="list-group-item">
+      <div class="row me-2 ms-2 mb-2">
+          <a href="#" class="btn btn-primary col me-1">Edit</a>
+          <a href="#" class="btn btn-danger col ms-1">Delete</a>
+      </div>
+        <div class="row me-2 ms-2">
+          <a href="#" class="btn btn-success">Mark Complete</a>
+        </div>
+      </div>
+
+  </li>
+  </ul>
+
 </div>
 
 {% endblock body %}
