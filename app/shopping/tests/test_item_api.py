@@ -8,6 +8,8 @@ from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APIClient
 
+from decimal import Decimal
+
 from core.models import (
     Item,
     Category,
@@ -75,12 +77,17 @@ class PrivateItemAPITests(TestCase):
 
     def test_create_new_item(self):
         """Test creating an item."""
-
-        payload = {'name': 'fish sticks', 'price': 9.99}
+        payload = {'name': 'fish sticks', 'price': Decimal('9.99')}
 
         res = self.client.post(ITEM_URL, payload)
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        item = Item.objects.get(user=self.user, name=payload['name'])
+        for k, v in payload.items():
+            if isinstance(v, str):
+                self.assertEqual(getattr(item, k), v.title())
+            else:
+                self.assertEqual(getattr(item, k), v)
 
     def test_add_category_to_item(self):
         """Test adding category to existing item."""
