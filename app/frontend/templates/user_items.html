@@ -25,14 +25,14 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col">
-                <h4>{{ item.name }}</h4>
+                <h3>{{ item.name }}</h3>
               </div>
               <div class="col text-end">
-                <a href="" class="col"><span style="font-size: 1rem;" class="badge bg-danger">Delete</span></a>
+                <a href="{% url 'delete_item' pk=item.id %}" class="col"><span style="font-size: 1rem;" class="badge bg-danger">Delete</span></a>
               </div>
             </div>
             <div class="row">
-              <p class="col mb-0">${{ item.price }}</p>
+              <h5 class="col mb-0">${{ item.price }}</h5>
             </div>
           </li>
           <li class="list-group-item">Dept: {{ item.category }}</li>
