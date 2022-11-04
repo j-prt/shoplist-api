@@ -26,7 +26,7 @@ def create_user(**params):
     return get_user_model().objects.create_user(**params)
 
 
-class PublicItemAPITests(TestCase):
+class PublicCategoryAPITests(TestCase):
     """Test unauthenticated API access."""
 
     def setUp(self):
@@ -39,7 +39,7 @@ class PublicItemAPITests(TestCase):
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
 
-class PrivateItemAPITests(TestCase):
+class PrivateCategoryAPITests(TestCase):
     """Test authenticated API access."""
 
     def setUp(self):
@@ -58,3 +58,14 @@ class PrivateItemAPITests(TestCase):
         cats = Category.objects.filter(user=self.user).order_by('-name')
         serializer = CatSerializer(cats, many=True)
         self.assertEqual(res.data, serializer.data)
+
+    def test_private_is_true(self):
+        """Test private must be set to True."""
+
+        payload = {'name': 'grocery', 'private': False}
+
+        res = self.client.post(CAT_URL, payload)
+
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        cat = Category.objects.get(user=self.user, name=payload['name'])
+        self.assertEqual(True, cat.private)

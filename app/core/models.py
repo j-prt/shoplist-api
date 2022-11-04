@@ -11,6 +11,15 @@ from django.contrib.auth.models import (
 )
 
 
+class NameField(models.CharField):
+    """CharField that converts contents to title-case."""
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def get_prep_value(self, value):
+        return str(value).title()
+
+
 class UserManager(BaseUserManager):
     """Manager for users."""
 
@@ -45,13 +54,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-
-class NameField(models.CharField):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-    def get_prep_value(self, value):
-        return str(value).title()
 
 
 class ShopList(models.Model):
@@ -128,6 +130,7 @@ class Category(models.Model):
         on_delete=models.CASCADE,
         related_name='categories',
     )
+    private = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name
@@ -147,6 +150,7 @@ class Store(models.Model):
         on_delete=models.CASCADE,
         related_name='stores',
     )
+    private = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name

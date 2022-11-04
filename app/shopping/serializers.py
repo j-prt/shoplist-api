@@ -17,7 +17,7 @@ class CatSerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ['id', 'name']
-        read_only_fields = ['id']
+        read_only_fields = ['id', 'private']
 
 
 class StoreSerializer(serializers.ModelSerializer):
@@ -26,7 +26,7 @@ class StoreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Store
         fields = ['id', 'name']
-        read_only_fields = ['id']
+        read_only_fields = ['id', 'private']
 
 
 class ItemSerializer(serializers.ModelSerializer):
@@ -47,22 +47,23 @@ class ItemSerializer(serializers.ModelSerializer):
         )
         instance.category = cat_obj
 
-    def _get_or_create_store(self, stores, instance):
+    def _get_or_create_store(self, store, instance):
         auth_user = self.context['request'].user
-        for store in stores:
-            store_obj, created = Store.objects.get_or_create(
-                user=auth_user,
-                **store,
-            )
-            instance.store.add(store_obj)
+        store_obj, created = Store.objects.get_or_create(
+            user=auth_user,
+            **store,
+        )
+        instance.store = store_obj
 
     def create(self, validated_data):
         """Create an item."""
-        category = validated_data.pop('category', [])
-        store = validated_data.pop('store', [])
+        category = validated_data.pop('category', None)
+        store = validated_data.pop('store', None)
         item = Item.objects.create(**validated_data)
-        self._get_or_create_category(category, item)
-        self._get_or_create_store(store, item)
+        if category:
+            self._get_or_create_category(category, item)
+        if store:
+            self._get_or_create_store(store, item)
 
         return item
 

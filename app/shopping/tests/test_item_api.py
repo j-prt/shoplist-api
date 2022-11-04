@@ -73,6 +73,15 @@ class PrivateItemAPITests(TestCase):
         serializer = ItemSerializer(items, many=True)
         self.assertEqual(res.data, serializer.data)
 
+    def test_create_new_item(self):
+        """Test creating an item."""
+
+        payload = {'name': 'fish sticks', 'price': 9.99}
+
+        res = self.client.post(ITEM_URL, payload)
+
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+
     def test_add_category_to_item(self):
         """Test adding category to existing item."""
         item = create_item(user=self.user)

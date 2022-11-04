@@ -54,7 +54,8 @@ class ShopListViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-class ItemViewSet(mixins.DestroyModelMixin,
+class ItemViewSet(mixins.CreateModelMixin,
+                  mixins.DestroyModelMixin,
                   mixins.UpdateModelMixin,
                   mixins.ListModelMixin,
                   viewsets.GenericViewSet):
@@ -69,8 +70,13 @@ class ItemViewSet(mixins.DestroyModelMixin,
         user = self.request.user
         return self.queryset.filter(user=user).order_by('-name')
 
+    def perform_create(self, serializer):
+        """Create a new item."""
+        serializer.save(user=self.request.user)
 
-class CatViewSet(mixins.DestroyModelMixin,
+
+class CatViewSet(mixins.CreateModelMixin,
+                 mixins.DestroyModelMixin,
                  mixins.UpdateModelMixin,
                  mixins.ListModelMixin,
                  viewsets.GenericViewSet):
@@ -85,8 +91,13 @@ class CatViewSet(mixins.DestroyModelMixin,
         user = self.request.user
         return self.queryset.filter(user=user).order_by('-name')
 
+    def perform_create(self, serializer):
+        """Create a new category."""
+        serializer.save(user=self.request.user, private=True)
 
-class StoreViewSet(mixins.DestroyModelMixin,
+
+class StoreViewSet(mixins.CreateModelMixin,
+                   mixins.DestroyModelMixin,
                    mixins.UpdateModelMixin,
                    mixins.ListModelMixin,
                    viewsets.GenericViewSet):
@@ -100,3 +111,7 @@ class StoreViewSet(mixins.DestroyModelMixin,
         """Retrieve list of stores."""
         user = self.request.user
         return self.queryset.filter(user=user).order_by('-name')
+
+    def perform_create(self, serializer):
+        """Create a new store."""
+        serializer.save(user=self.request.user, private=True)

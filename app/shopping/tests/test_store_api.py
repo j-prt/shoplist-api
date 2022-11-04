@@ -58,3 +58,13 @@ class PrivateStoreAPITests(TestCase):
         stores = Store.objects.filter(user=self.user).order_by('-name')
         serializer = StoreSerializer(stores, many=True)
         self.assertEqual(res.data, serializer.data)
+
+    def test_private_is_true(self):
+        """Test private must be set to True."""
+        payload = {'name': 'Sears', 'private': False}
+
+        res = self.client.post(STORE_URL, payload)
+
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        store = Store.objects.get(user=self.user, name=payload['name'])
+        self.assertEqual(True, store.private)
