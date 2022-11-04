@@ -130,7 +130,7 @@ class Category(models.Model):
         on_delete=models.CASCADE,
         related_name='categories',
     )
-    private = models.BooleanField(default=True)
+    private = models.BooleanField(default=True, editable=False)
 
     def __str__(self):
         return self.name
@@ -150,7 +150,7 @@ class Store(models.Model):
         on_delete=models.CASCADE,
         related_name='stores',
     )
-    private = models.BooleanField(default=True)
+    private = models.BooleanField(default=True, editable=False)
 
     def __str__(self):
         return self.name
