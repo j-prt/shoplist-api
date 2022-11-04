@@ -40,4 +40,10 @@ urlpatterns = [
         views.DeleteCategoryView.as_view(),
         name='delete_category'
     ),
+    path('new_store/', views.StoreCreateView.as_view(), name='new_store'),
+    path(
+        'new_dept/',
+        views.CategoryCreateView.as_view(),
+        name='new_category'
+    ),
 ]

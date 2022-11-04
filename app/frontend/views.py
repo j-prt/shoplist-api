@@ -105,3 +105,43 @@ class DeleteCategoryView(LoginRequiredMixin, generic.DeleteView):
     model = models.Category
     template_name = 'category_confirm_delete.html'
     success_url = reverse_lazy('user_tags')
+
+
+class StoreCreateView(LoginRequiredMixin, generic.CreateView):
+    model = models.Store
+    template_name = 'new_store.html'
+    fields = ('name',)
+
+    def get_success_url(self):
+        return reverse('user_tags')
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['name'].label = 'Store name'
+        return form
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.user = self.request.user
+        self.object.save()
+        return super().form_valid(form)
+
+
+class CategoryCreateView(LoginRequiredMixin, generic.CreateView):
+    model = models.Category
+    template_name = 'new_category.html'
+    fields = ('name',)
+
+    def get_success_url(self):
+        return reverse('user_tags')
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['name'].label = 'Department name'
+        return form
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.user = self.request.user
+        self.object.save()
+        return super().form_valid(form)
