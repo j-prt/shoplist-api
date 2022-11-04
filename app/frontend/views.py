@@ -81,6 +81,7 @@ class DeleteItemView(LoginRequiredMixin, generic.DeleteView):
     template_name = 'item_confirm_delete.html'
     success_url = reverse_lazy('user_items')
 
+
 class ItemTagsView(LoginRequiredMixin, generic.ListView):
     template_name = 'user_tags.html'
     model = models.Category
@@ -92,3 +93,15 @@ class ItemTagsView(LoginRequiredMixin, generic.ListView):
             'store_list': models.Store.objects.order_by('name'),
         })
         return context
+
+
+class DeleteStoreView(LoginRequiredMixin, generic.DeleteView):
+    model = models.Store
+    template_name = 'store_confirm_delete.html'
+    success_url = reverse_lazy('user_tags')
+
+
+class DeleteCategoryView(LoginRequiredMixin, generic.DeleteView):
+    model = models.Category
+    template_name = 'category_confirm_delete.html'
+    success_url = reverse_lazy('user_tags')
