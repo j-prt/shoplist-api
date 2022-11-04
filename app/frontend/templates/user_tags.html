@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="row">
+  {% if user.display_name %}
+  <h1 class="col">{{ user.display_name }}'s Tags</h1>
+  <a href="" style="max-width: 12%;" class="btn btn-primary col mb-2 mt-2 me-4" >New Store</a>
+  <a href="" style="max-width: 12%;" class="btn btn-primary col mb-2 mt-2 me-4" >New Dept</a>
+
+  {% else %}
+  <h1>My Items</h1>
+  {% endif %}
+
+</div>
+
+<h3>Stores:</h3>
+<div class="container mb-3">
+  <ul class="list-group">
+    {% for store in store_list %}
+    <li class="list-group-item">
+      {{ store.name }}
+    </li>
+
+  {% endfor %}
+  </ul>
+</div>
+<h3>Departments:</h3>
+<div class="container mb-3">
+  <ul class="list-group">
+    {% for category in category_list %}
+    <li class="list-group-item">
+      {{ category.name }}
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+
+{{ category_list }}
+
+
+
+{% endblock body %}

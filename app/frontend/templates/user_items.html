@@ -4,7 +4,7 @@
 <div class="row">
   {% if user.display_name %}
   <h1 class="col">{{ user.display_name }}'s Items</h1>
-  <a href="{% url 'new_item' %}" style="max-width: 20%;" class="btn btn-primary col mb-2 mt-2 me-4" >Add Item</a>
+  <a href="{% url 'new_item' %}" style="max-width: 20%;" class="btn btn-primary col mb-2 mt-2 me-4" >New Item</a>
   {% else %}
   <h1>My Items</h1>
   {% endif %}

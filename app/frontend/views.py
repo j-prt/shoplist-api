@@ -80,3 +80,15 @@ class DeleteItemView(LoginRequiredMixin, generic.DeleteView):
     model = models.Item
     template_name = 'item_confirm_delete.html'
     success_url = reverse_lazy('user_items')
+
+class ItemTagsView(LoginRequiredMixin, generic.ListView):
+    template_name = 'user_tags.html'
+    model = models.Category
+    ordering = ['name']
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context.update({
+            'store_list': models.Store.objects.order_by('name'),
+        })
+        return context
