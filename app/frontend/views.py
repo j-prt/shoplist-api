@@ -61,7 +61,8 @@ class ListCreateView(LoginRequiredMixin, generic.CreateView):
 
     def get_form(self, form_class=form_class):
         form = super().get_form(form_class)
-        form.fields['items'].queryset = form.fields['items'].queryset.filter(user=self.request.user)
+        form.fields['items'].queryset \
+            = form.fields['items'].queryset.filter(user=self.request.user)
         return form
 
 
@@ -84,8 +85,10 @@ class ItemCreateView(LoginRequiredMixin, generic.CreateView):
         form = super().get_form(form_class)
         form.fields['name'].label = 'Item name'
         form.fields['category'].label = 'Department'
-        form.fields['category'].queryset = form.fields['category'].queryset.filter(user=self.request.user)
-        form.fields['store'].queryset = form.fields['store'].queryset.filter(user=self.request.user)
+        form.fields['category'].queryset \
+            = form.fields['category'].queryset.filter(user=self.request.user)
+        form.fields['store'].queryset \
+            = form.fields['store'].queryset.filter(user=self.request.user)
         return form
 
     def form_valid(self, form):
@@ -114,8 +117,8 @@ class ItemTagsView(LoginRequiredMixin, generic.ListView):
         context = super().get_context_data(*args, **kwargs)
         context.update({
             'store_list': models.Store.objects
-                          .filter(user=self.request.user)
-                          .order_by('name'),
+                                      .filter(user=self.request.user)
+                                      .order_by('name'),
         })
         return context
 

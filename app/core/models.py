@@ -77,8 +77,10 @@ class ShopList(models.Model):
             self.save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('lists_detail', kwargs={'pk': self.pk, 'slug':self.title})
-
+        return reverse(
+            'lists_detail',
+            kwargs={'pk': self.pk, 'slug': self.title}
+        )
 
     def __str__(self):
         return self.title

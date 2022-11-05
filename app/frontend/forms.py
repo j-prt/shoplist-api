@@ -35,14 +35,14 @@ class ListCreateForm(forms.ModelForm):
         model = models.ShopList
         fields = ('title', 'items')
         widgets = {
-            'items':forms.SelectMultiple(attrs={
-                'class':'selectpicker',
-                'data-live-search':'true',
-                'data-style':'btn-primary',
-                'data-selected-text-format':'count',
+            'items': forms.SelectMultiple(attrs={
+                'class': 'selectpicker',
+                'data-live-search': 'true',
+                'data-style': 'btn-primary',
+                'data-selected-text-format': 'count',
             }),
-            'title':forms.TextInput(attrs={
-                'class':'form-control',
-                'style':'max-width: 270px;'
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'style': 'max-width: 270px;'
             }),
         }
