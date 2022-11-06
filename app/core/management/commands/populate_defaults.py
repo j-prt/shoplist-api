@@ -8,6 +8,7 @@ from core.models import (
     User,
 )
 
+
 DEFAULT_STORES = [
     'Walmart',
     'Costco',
@@ -38,10 +39,12 @@ DEFAULT_CATEGORIES = [
     'General Merchandise',
 ]
 
+
 user, _ = User.objects.get_or_create(
     email='defaults@default.com',
     password='defaultpass123'
 )
+
 
 def populate_stores(user, stores):
     """Create default store objects."""
@@ -54,6 +57,7 @@ def populate_stores(user, stores):
     except IntegrityError:
         print('\nError: Default stores already exist.')
     sys.stdout.write('Complete!\n')
+
 
 def populate_categories(user, categories):
     """Create default category objects."""
