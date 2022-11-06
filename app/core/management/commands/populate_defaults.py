@@ -73,7 +73,7 @@ def populate_categories(user, categories):
 
 
 class Command(BaseCommand):
-    """Django command to wait for database."""
+    """Django command to populate default tags."""
 
     def handle(self, *args, **options):
         """Entrypoint for command."""

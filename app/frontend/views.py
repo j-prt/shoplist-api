@@ -99,11 +99,11 @@ class ItemCreateView(LoginRequiredMixin, generic.CreateView):
         form.fields['category'].queryset \
             = form.fields['category'].queryset.filter(
                 Q(user=self.request.user) | Q(private=False)
-            )
+            ).order_by('name')
         form.fields['store'].queryset \
             = form.fields['store'].queryset.filter(
                 Q(user=self.request.user) | Q(private=False)
-                )
+            ).order_by('name')
         return form
 
     def form_valid(self, form):
