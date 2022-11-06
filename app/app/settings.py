@@ -141,7 +141,7 @@ MEDIA_URL = '/static/media/'
 MEDIA_ROOT = '/vol/web/media'
 STATIC_ROOT = '/vol/web/static'
 
-LOGIN_REDIRECT_URL = 'index'
+LOGIN_REDIRECT_URL = 'user_lists'
 LOGOUT_REDIRECT_URL = 'goodbye'
 
 LOGIN_URL = 'login'

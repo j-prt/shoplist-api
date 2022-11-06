@@ -4,6 +4,7 @@ Views for HTML pages.
 
 from django.shortcuts import render
 from django.views import generic
+from django.db.models import Q
 from django.urls import reverse, reverse_lazy  # noqa
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -96,9 +97,13 @@ class ItemCreateView(LoginRequiredMixin, generic.CreateView):
         form.fields['name'].label = 'Item name'
         form.fields['category'].label = 'Department'
         form.fields['category'].queryset \
-            = form.fields['category'].queryset.filter(user=self.request.user)
+            = form.fields['category'].queryset.filter(
+                Q(user=self.request.user) | Q(private=False)
+            )
         form.fields['store'].queryset \
-            = form.fields['store'].queryset.filter(user=self.request.user)
+            = form.fields['store'].queryset.filter(
+                Q(user=self.request.user) | Q(private=False)
+                )
         return form
 
     def form_valid(self, form):

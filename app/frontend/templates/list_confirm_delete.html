@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1>Confirm Delete</h1>
+
+<h4>ShopList: {{ shoplist.title }}</h4>
+
+<form method="POST">
+	{% csrf_token %}
+	<input type="submit" value="Confirm Delete" class="btn btn-danger btn-large mt-2">
+	<a href="{% url 'lists_detail' pk=shoplist.id slug=shoplist.title %}" class="btn btn-simple btn-large btn-default">Cancel</a>
+</form>
+
+{% endblock body %}
