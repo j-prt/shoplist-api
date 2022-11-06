@@ -21,22 +21,27 @@ urlpatterns = [
         views.UserListsDetailView.as_view(),
         name='lists_detail'
     ),
+    path(
+        'delete/list/<pk>',
+        views.DeleteListView.as_view(),
+        name='delete_list'
+    ),
     path('new/', views.ListCreateView.as_view(), name='new_list'),
     path('my_items/', views.UserItemsView.as_view(), name='user_items'),
     path('new_item/', views.ItemCreateView.as_view(), name='new_item'),
     path(
-        'my_items/delete/<pk>',
+        'delete/item/<pk>',
         views.DeleteItemView.as_view(),
         name='delete_item'
     ),
     path('my_tags/', views.ItemTagsView.as_view(), name='user_tags'),
     path(
-        'store/delete/<pk>',
+        'delete/store/<pk>',
         views.DeleteStoreView.as_view(),
         name='delete_store'
     ),
     path(
-        'dept/delete/<pk>',
+        'delete/dept/<pk>',
         views.DeleteCategoryView.as_view(),
         name='delete_category'
     ),

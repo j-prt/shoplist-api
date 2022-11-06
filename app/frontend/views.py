@@ -66,6 +66,16 @@ class ListCreateView(LoginRequiredMixin, generic.CreateView):
         return form
 
 
+class DeleteListView(LoginRequiredMixin, generic.DeleteView):
+    model = models.ShopList
+    template_name = 'list_confirm_delete.html'
+    success_url = reverse_lazy('user_lists')
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(user=self.request.user)
+
+
 class UserItemsView(LoginRequiredMixin, generic.ListView):
     model = models.Item
     template_name = 'user_items.html'
