@@ -132,14 +132,18 @@ class ItemTagsView(LoginRequiredMixin, generic.ListView):
         context = super().get_context_data(*args, **kwargs)
         context.update({
             'store_list': models.Store.objects
-                                      .filter(user=self.request.user)
-                                      .order_by('name'),
+                                      .filter(
+                                        Q(user=self.request.user) | \
+                                        Q(private=False)
+                                        ).order_by('name'),
         })
         return context
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        return queryset.filter(user_id=self.request.user.id)
+        return queryset.filter(
+            Q(user=self.request.user) | Q(private=False)
+        )
 
 
 class DeleteStoreView(LoginRequiredMixin, generic.DeleteView):
