@@ -46,6 +46,7 @@ class ItemSerializer(serializers.ModelSerializer):
             **category,
         )
         instance.category = cat_obj
+        instance.save()
 
     def _get_or_create_store(self, store, instance):
         auth_user = self.context['request'].user
@@ -54,6 +55,7 @@ class ItemSerializer(serializers.ModelSerializer):
             **store,
         )
         instance.store = store_obj
+        instance.save()
 
     def create(self, validated_data):
         """Create an item."""
@@ -79,7 +81,6 @@ class ItemSerializer(serializers.ModelSerializer):
             if instance.store:
                 instance.store.delete()
             self._get_or_create_store(store, instance)
-
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
 
@@ -112,7 +113,7 @@ class ShopListSerializer(serializers.ModelSerializer):
                     user=auth_user,
                     **category,
                 )
-                item_obj.category.add(cat_obj)
+                item_obj.category = cat_obj
             if store is not None:
                 if item_obj.store:
                     item_obj.store.delete()
@@ -120,7 +121,8 @@ class ShopListSerializer(serializers.ModelSerializer):
                     user=auth_user,
                     **store,
                 )
-                item_obj.store.add(store_obj)
+                item_obj.store = store_obj
+            item_obj.save()
             instance.items.add(item_obj)
 
     def create(self, validated_data):
