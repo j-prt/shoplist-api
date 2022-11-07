@@ -95,7 +95,7 @@ class ItemCreateView(LoginRequiredMixin, generic.CreateView):
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
         form.fields['name'].label = 'Item name'
-        form.fields['category'].label = 'Department'
+        form.fields['category'].label = 'Category'
         form.fields['category'].queryset \
             = form.fields['category'].queryset.filter(
                 Q(user=self.request.user) | Q(private=False)
@@ -197,7 +197,7 @@ class CategoryCreateView(LoginRequiredMixin, generic.CreateView):
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
-        form.fields['name'].label = 'Department name'
+        form.fields['name'].label = 'Category name'
         return form
 
     def form_valid(self, form):

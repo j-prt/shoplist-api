@@ -41,13 +41,13 @@ urlpatterns = [
         name='delete_store'
     ),
     path(
-        'delete/dept/<pk>',
+        'delete/category/<pk>',
         views.DeleteCategoryView.as_view(),
         name='delete_category'
     ),
     path('new_store/', views.StoreCreateView.as_view(), name='new_store'),
     path(
-        'new_dept/',
+        'new_category/',
         views.CategoryCreateView.as_view(),
         name='new_category'
     ),
