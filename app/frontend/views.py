@@ -135,7 +135,8 @@ class ItemTagsView(LoginRequiredMixin, generic.ListView):
                                       .filter(
                                         Q(user=self.request.user) | \
                                         Q(private=False)
-                                        ).order_by('name'),
+                                        ).order_by('name')
+                                        .order_by('-private'),
         })
         return context
 
@@ -143,7 +144,7 @@ class ItemTagsView(LoginRequiredMixin, generic.ListView):
         queryset = super().get_queryset()
         return queryset.filter(
             Q(user=self.request.user) | Q(private=False)
-        )
+        ).order_by('-private')
 
 
 class DeleteStoreView(LoginRequiredMixin, generic.DeleteView):
@@ -153,7 +154,7 @@ class DeleteStoreView(LoginRequiredMixin, generic.DeleteView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        return queryset.filter(user_id=self.request.user.id)
+        return queryset.filter(user=self.request.user)
 
 
 class DeleteCategoryView(LoginRequiredMixin, generic.DeleteView):

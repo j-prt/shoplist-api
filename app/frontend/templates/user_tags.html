@@ -19,7 +19,11 @@
   <ul class="list-group">
     {% for store in store_list %}
     <li class="list-group-item">
+      {% if store.private == True %}
       <a href="{% url 'delete_store' pk=store.id %}" ><span class="badge bg-danger me-2">x</span></a>
+      {% else %}
+      <span class="badge bg-primary me-2">D</span>
+      {% endif %}
       {{ store.name }}
     </li>
 
@@ -36,7 +40,11 @@
   <ul class="list-group">
     {% for category in category_list %}
     <li class="list-group-item">
+      {% if category.private == True %}
       <a href="{% url 'delete_category' pk=category.id %}" ><span class="badge bg-danger me-2">x</span></a>
+      {% else %}
+      <span class="badge bg-primary me-2">D</span>
+      {% endif %}
       {{ category.name }}
     </li>
     {% endfor %}
