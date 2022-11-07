@@ -5,9 +5,11 @@ Views for HTML pages.
 from django.shortcuts import render
 from django.views import generic
 from django.db.models import Q
-from django.urls import reverse, reverse_lazy  # noqa
+from django.urls import reverse, reverse_lazy
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from rest_framework.authtoken.models import Token
 
 from frontend import forms
 from core import models
@@ -133,10 +135,10 @@ class ItemTagsView(LoginRequiredMixin, generic.ListView):
         context.update({
             'store_list': models.Store.objects
                                       .filter(
-                                        Q(user=self.request.user) | \
+                                        Q(user=self.request.user) |
                                         Q(private=False)
                                         ).order_by('name')
-                                        .order_by('-private'),
+                                         .order_by('-private'),
         })
         return context
 
@@ -205,3 +207,18 @@ class CategoryCreateView(LoginRequiredMixin, generic.CreateView):
         self.object.user = self.request.user
         self.object.save()
         return super().form_valid(form)
+
+
+@login_required
+def manage_token(request):
+    context = {}
+
+    if request.method == 'POST':
+        try:
+            Token.objects.get(user=request.user).delete()
+            token = Token.objects.create(user=request.user)
+        except Token.DoesNotExist:
+            token = Token.objects.create(user=request.user)
+        context['token'] = token.key
+
+    return render(request, 'manage_token.html', context=context)

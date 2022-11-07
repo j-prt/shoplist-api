@@ -48,7 +48,7 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li><a class="dropdown-item" href="{% url 'api-docs' %}">Docs</a></li>
-              <li><a class="dropdown-item {% if user.is_authenticated == False %}disabled{% endif %}" href="#">Manage Token</a></li>
+              <li><a class="dropdown-item {% if user.is_authenticated == False %}disabled{% endif %}" href="{% url 'manage_token' %}">Manage Token</a></li>
             </ul>
           </li>
           <li class="nav-item">

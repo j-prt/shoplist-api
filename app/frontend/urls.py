@@ -51,4 +51,5 @@ urlpatterns = [
         views.CategoryCreateView.as_view(),
         name='new_category'
     ),
+    path('token/', views.manage_token, name='manage_token'),
 ]

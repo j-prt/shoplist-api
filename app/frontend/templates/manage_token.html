@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<h1>API Token</h1>
+
+{% if token %}
+<p>
+Your API token is: {{ token }}
+</p>
+{% endif %}
+
+<div class="container">
+  <form method="post">
+    {% csrf_token %}
+    <input type="submit" value="Refresh API Token" class="btn btn-warning btn-large mt-2">
+  </form>
+</div>
+
+{% endblock body %}
