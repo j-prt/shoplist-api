@@ -2,7 +2,7 @@
 
 
 {% block body %}
-<h1>New List</h1>
+<h1 class="mb-4">New List</h1>
 <form method="POST">
   {% csrf_token %}
   {{ form.as_p }}

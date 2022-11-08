@@ -2,7 +2,7 @@
 {% block body %}
 {% load django_bootstrap5%}
 
-<h1>New Item</h1>
+<h1 class="mb-4">New Item</h1>
 <form method="POST">
   {% csrf_token %}
   {% bootstrap_form form %}

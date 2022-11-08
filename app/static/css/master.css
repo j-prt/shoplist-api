@@ -1,0 +1,25 @@
+* {
+    font-family: 'Arsenal', sans-serif;
+}
+
+h1 {
+    font-family: 'Lobster', cursive;
+}
+
+.navbar-brand {
+    font-family: 'Lobster', cursive;
+    font-size: 1.5rem;
+}
+
+.nav-item {
+    font-family: 'Dosis', sans-serif;
+    font-size: 1.2rem;
+}
+
+h2, h3, h4, .btn {
+    font-family: 'Dosis', sans-serif;
+}
+
+.main-body {
+    padding: 4% 9%;
+}
