@@ -65,6 +65,7 @@ class ShopList(models.Model):
     )
     title = models.CharField(max_length=64, blank=True)
     items = models.ManyToManyField('Item', blank=True)
+    active = models.BooleanField('Active', default=True)
 
     @property
     def total(self):

@@ -94,7 +94,7 @@ class ShopListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ShopList
-        fields = ['id', 'title', 'items', 'total']
+        fields = ['id', 'title', 'items', 'total', 'active']
         read_only_fields = ['id']
 
     def _get_or_create_items(self, items, instance):

@@ -98,6 +98,10 @@ class ListEditView(LoginRequiredMixin, generic.UpdateView):
             = form.fields['items'].queryset.filter(user=self.request.user)
         return form
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(user=self.request.user)
+
 
 class DeleteListView(LoginRequiredMixin, generic.DeleteView):
     model = models.ShopList
