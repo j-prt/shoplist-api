@@ -1,7 +1,43 @@
 {% extends "base.html" %}
 
-{% block body %}
-    <h1>ShopList</h1>
+{% block body_full %}
+<div class="p-5 bg-info bg-gradient shadow-lg">
+  <div class="h-100 p-5 bg-dark bg-gradient text-white rounded-3">
+    <h1 style="font-family: 'Lobster', cursive;">ShopList</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris imperdiet mi pellentesque, porta ante ac,
+    convallis enim. Nunc interdum egestas risus, vitae mollis turpis aliquam bibendum. Integer a mattis nibh.
+    Nam imperdiet ultrices neque et semper. Nullam libero justo, consequat in dignissim ut, fringilla sed dui.
+    Nullam dapibus turpis at nunc convallis vehicula. Vivamus dapibus dignissim feugiat. Donec id tristique augue.
+    Aliquam a sem non lorem ultrices sollicitudin. Aliquam vel vestibulum nulla. Fusce in tortor id risus tincidunt
+    ultricies consectetur quis magna. Praesent aliquet ex ut fringilla rutrum. Nulla dignissim hendrerit orci, eu
+    ultricies nisl volutpat tempor.</p>
+    <a href="{% url 'signup' %}" class="btn btn-outline-light">Sign Up</a>
+    <a href="{% url 'login' %}" class="btn btn-outline-light">Login</a>
+  </div>
+</div>
 
+<div class="card bg-success bg-gradient border-0 shadow-lg">
+  <div class="card-body px-3 pt-grid-gutter pb-0">
+    <div class="row g-0 ps-1">
+      <div class="col-md-4 px-2 mb-grid-gutter">
+        <div class="text-white d-block text-center text-decoration-none me-1">
+          <h3 class="fs-base pt-1 mb-0">Tag</h3>
+          Choose from a default assortment of store and category tags, or create your own."
+        </div>
+      </div>
+      <div class="col-md-4 px-2 mb-grid-gutter">
+        <div class="text-white d-block text-center text-decoration-none me-1">
+          <h3 class="fs-base pt-1 mb-0">Item</h3>
+          Build your collection of items to use in creating your ShopLists.        </div>
+      </div>
+      <div class="col-md-4 px-2 mb-grid-gutter">
+        <div class="text-white d-block text-center text-decoration-none me-1">
+          <h3 class="fs-base pt-1 mb-0">List</h3>
+          Start making lists!
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}
