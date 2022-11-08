@@ -51,6 +51,23 @@ class UserListsDetailView(LoginRequiredMixin, generic.DetailView):
         queryset = super().get_queryset()
         return queryset.filter(user_id=self.request.user.id)
 
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        default_stores = {
+            'Costco': 'assets/costco.jpg',
+            'Freshco': 'assets/freshco.jpg',
+            'Loblaws': 'assets/loblaws.jpg',
+            'Petsmart': 'assets/petsmart.jpg',
+            'Rcss': 'assets/rcss.jpg',
+            'Safeway': 'assets/safeway.jpg',
+            'Save-On-Foods': 'assets/saveon.jpg',
+            'Walmart': 'assets/walmart.jpg',
+            }
+        first = self.object.items.all()[0].store.name
+
+
+        context.update({'img_url': default_stores[first]})
+        return context
 
 class ListCreateView(LoginRequiredMixin, generic.CreateView):
     form_class = forms.ListCreateForm

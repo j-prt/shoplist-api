@@ -8,6 +8,11 @@
 <p>
   Your API token is: {{ token }}
 </p>
+
+{% else %}
+<p>
+  Hit the button below to generate a new API token (this will invalidate your current token).
+</p>
 {% endif %}
 
 <div class="container">
