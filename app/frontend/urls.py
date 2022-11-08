@@ -22,6 +22,11 @@ urlpatterns = [
         name='lists_detail'
     ),
     path(
+        'edit/list/<pk>',
+        views.ListEditView.as_view(),
+        name='list_edit'
+    ),
+    path(
         'delete/list/<pk>',
         views.DeleteListView.as_view(),
         name='delete_list'

@@ -69,6 +69,7 @@ class UserListsDetailView(LoginRequiredMixin, generic.DetailView):
         context.update({'img_url': default_stores[first]})
         return context
 
+
 class ListCreateView(LoginRequiredMixin, generic.CreateView):
     form_class = forms.ListCreateForm
     template_name = 'new_list.html'
@@ -78,6 +79,18 @@ class ListCreateView(LoginRequiredMixin, generic.CreateView):
         self.object.user = self.request.user
         self.object.save()
         return super().form_valid(form)
+
+    def get_form(self, form_class=form_class):
+        form = super().get_form(form_class)
+        form.fields['items'].queryset \
+            = form.fields['items'].queryset.filter(user=self.request.user)
+        return form
+
+
+class ListEditView(LoginRequiredMixin, generic.UpdateView):
+    model = models.ShopList
+    form_class = forms.ListCreateForm
+    template_name = 'list_edit.html'
 
     def get_form(self, form_class=form_class):
         form = super().get_form(form_class)

@@ -19,7 +19,7 @@
       {% endfor %}
       <li class="list-group-item">
         <div class="row me-2 ms-2 mb-2">
-            <a href="#" class="btn btn-primary col me-1">Edit</a>
+            <a href="{% url 'list_edit' pk=shoplist.id %}" class="btn btn-primary col me-1">Edit</a>
             <a href="{% url 'delete_list' pk=shoplist.id %}" class="btn btn-danger col ms-1">Delete</a>
         </div>
           <div class="row me-2 ms-2">
