@@ -4,7 +4,7 @@ Views for HTML pages.
 
 from django.shortcuts import render
 from django.views import generic
-from django.db.models import Q, F
+from django.db.models import Q
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
