@@ -1,10 +1,14 @@
-# ShopList API (WIP)
+# ShopList (WIP)
 
-RESTful API for creating and managing shopping lists using Django REST Framework.
+RESTful API and responsive site for creating and managing shopping lists using Django and Django REST Framework. 
 
 ## Overview
 
 The inspiration for this project is an issue I've long had: managing my shopping lists. Every time I remember I have to buy something I make a note in my phone, on a postit, on my hand, on an index card.. etc. When it comes time to actually do my shop, I find that I'm scraping together all this data and trying to make a coherent list of what I need to buy, and where. And I have no idea how much it will cost. 
+
+## The Site
+
+Fully functional and responsive site where you can create an account, log in, make and manage shopping lists built from your personal collection of items and tags. Shares a DB with the API, so you are able to manage your data via either the REST API or the front end interface. Front end also includes links to API documentation, as well as API token refresh.
 
 ## The API
 
@@ -30,21 +34,21 @@ The API comprises five models: User, ShopList, Item, Store, and Category.
   - Deletion (DELETE)
   
 ### Item
-- Model for storing item information. ManyToMany relationships with ShopList, Category, and Store.
+- Model for storing item information. ManyToMany relationship with ShopList. ForeignKey relationships to Store and Category.
 - API provides:
   - Replacing existing items (PUT).
   - Partially updating an existing item (PATCH)
   - Deletion (DELETE)
   
 ### Store
-- Model for designating the store(s) where an item can be found.
+- Model for designating the store(s) where an item can be found. 
 - API provides:
   - Replacing existing items (PUT).
   - Partially updating an existing item (PATCH)
   - Deletion (DELETE)
   
 ### Category
-- Model for designating the category(ies) each item belongs to.
+- Model for designating the category(ies) each item belongs to. 
 - API provides:
   - Replacing existing items (PUT).
   - Partially updating an existing item (PATCH)
