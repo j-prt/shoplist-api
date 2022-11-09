@@ -4,7 +4,7 @@ Views for HTML pages.
 
 from django.shortcuts import render
 from django.views import generic
-from django.db.models import Q
+from django.db.models import Q, F
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -40,7 +40,9 @@ class UserListsView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        return queryset.filter(user_id=self.request.user.id)
+        return queryset.filter(
+            user_id=self.request.user.id
+            ).order_by('-active', '-id')
 
 
 class UserListsDetailView(LoginRequiredMixin, generic.DetailView):
@@ -64,10 +66,26 @@ class UserListsDetailView(LoginRequiredMixin, generic.DetailView):
             'Walmart': 'assets/walmart.jpg',
             }
         first = self.object.items.all()[0].store.name
-
-
         context.update({'img_url': default_stores[first]})
         return context
+
+
+class ListCompleteView(LoginRequiredMixin, generic.RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        return reverse(
+            'lists_detail',
+            kwargs={
+                'pk': self.kwargs.get('pk'),
+                'slug': self.kwargs.get('slug'),
+                }
+            )
+
+    def get(self, request, *args, **kwargs):
+        shoplist = models.ShopList.objects.get(id=self.kwargs.get('pk'))
+        shoplist.active = not shoplist.active
+        shoplist.save()
+
+        return super().get(request, *args, **kwargs)
 
 
 class ListCreateView(LoginRequiredMixin, generic.CreateView):
