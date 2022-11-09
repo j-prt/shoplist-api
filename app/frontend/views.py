@@ -67,7 +67,10 @@ class UserListsDetailView(LoginRequiredMixin, generic.DetailView):
             'None': None,
             }
         try:
-            first = self.object.items.all()[0].store.name
+            if self.object.items.all()[0].store.name in default_stores:
+                first = self.object.items.all()[0].store.name
+            else:
+                first = 'None'
         except:
             first = 'None'
         context.update({'img_url': default_stores[first]})
