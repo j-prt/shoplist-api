@@ -64,8 +64,12 @@ class UserListsDetailView(LoginRequiredMixin, generic.DetailView):
             'Safeway': 'assets/safeway.jpg',
             'Save-On-Foods': 'assets/saveon.jpg',
             'Walmart': 'assets/walmart.jpg',
+            'None': None,
             }
-        first = self.object.items.all()[0].store.name
+        try:
+            first = self.object.items.all()[0].store.name
+        except:
+            first = 'None'
         context.update({'img_url': default_stores[first]})
         return context
 
